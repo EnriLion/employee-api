@@ -1,8 +1,8 @@
 package com.tcs.check_in_check_out_system.service;
 
-import com.tcs.check_in_check_out_system.model.CheckInModel;
+//import com.tcs.check_in_check_out_system.model.CheckInModel;
 import com.tcs.check_in_check_out_system.model.EmployeeModel;
-import com.tcs.check_in_check_out_system.repository.CheckInRepository;
+//import com.tcs.check_in_check_out_system.repository.CheckInRepository;
 import com.tcs.check_in_check_out_system.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private CheckInRepository checkInRepository;
+//    @Autowired
+//    private CheckInRepository checkInRepository;
 
 //    @Autowired
 //    private CheckInRepository checkInRepository;
@@ -43,11 +43,11 @@ public class EmployeeService {
         employeeModel.setPosition(position);
         employeeModel.setEmail(email);
         employeeModel.setPhone(phone);
-        CheckInModel checkInModel = new CheckInModel();
-        checkInModel.setCheckInTime(LocalDateTime.now());
-        checkInModel.setCheckOutTime(LocalDateTime.now());
-        checkInModel.setStatus(false);
-        employeeModel.getCheckIns().add(checkInModel);
+//        CheckInModel checkInModel = new CheckInModel();
+//        checkInModel.setCheckInTime(LocalDateTime.now());
+//        checkInModel.setCheckOutTime(LocalDateTime.now());
+//        checkInModel.setStatus(false);
+//        employeeModel.getCheckIns().add(checkInModel);
         return employeeRepository.save(employeeModel);
     }
 
@@ -57,16 +57,16 @@ public class EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
         // Create a new CheckInModel
-        CheckInModel checkInModel = new CheckInModel();
-        checkInModel.setCheckInTime(LocalDateTime.now()); // Or set to LocalDateTime.now()
-        checkInModel.setCheckOutTime(null); // Set to null or manage based on your logic
-        checkInModel.setStatus(false); // Set initial status
+//        CheckInModel checkInModel = new CheckInModel();
+//        checkInModel.setCheckInTime(LocalDateTime.now()); // Or set to LocalDateTime.now()
+//        checkInModel.setCheckOutTime(null); // Set to null or manage based on your logic
+//        checkInModel.setStatus(false); // Set initial status
 
         // Link back to the employee if needed
-        checkInModel.setEmployee(employeeModel);
+//        checkInModel.setEmployee(employeeModel);
 
         // Add the new check-in to the employee's existing check-ins
-        employeeModel.getCheckIns().add(checkInModel);
+//        employeeModel.getCheckIns().add(checkInModel);
 
         // Save the updated employee model
         return employeeRepository.save(employeeModel);
