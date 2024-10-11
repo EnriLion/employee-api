@@ -19,21 +19,21 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-//    @PostMapping("/checkin")
-//    public ResponseEntity<EmployeeModel> loginCheckIn(@RequestParam String name , @RequestParam String department, @RequestParam String position, @RequestParam String email, @RequestParam String phone){
-//        if (name.isEmpty() || department.isEmpty() || position.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-//           return  ResponseEntity.notFound().build();
-//        } else {
-//            EmployeeModel employeeModel = employeeService.registerCheckIn(name,department,position,email,phone);
-//            return ResponseEntity.ok(employeeModel);
-//        }
-//    }
-
-    @PostMapping("/checking/{id}")
-    public ResponseEntity<EmployeeModel> registCheckIn(@PathVariable Long id){
-        EmployeeModel updatedEmployee = employeeService.registCheckIn(id);
-        return ResponseEntity.ok(updatedEmployee);
+    @PostMapping("/checkin")
+    public ResponseEntity<EmployeeModel> loginCheckIn(@RequestParam String name , @RequestParam String department, @RequestParam String position, @RequestParam String email, @RequestParam String phone){
+        if (name.isEmpty() || department.isEmpty() || position.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+           return  ResponseEntity.notFound().build();
+        } else {
+            EmployeeModel employeeModel = employeeService.registerCheckIn(name,department,position,email,phone);
+            return ResponseEntity.ok(employeeModel);
+        }
     }
+
+//    @PostMapping("/checking/{id}")
+//    public ResponseEntity<EmployeeModel> registCheckIn(@PathVariable Long id){
+//        EmployeeModel updatedEmployee = employeeService.registCheckIn(id);
+//        return ResponseEntity.ok(updatedEmployee);
+//    }
 
     @GetMapping("/records")
     public ResponseEntity<List <EmployeeModel>> getRecords(){
@@ -46,17 +46,17 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{id}/checkout")
-    public ResponseEntity<EmployeeModel> updateCheckOut(@PathVariable Long id) {
-        try {
-            EmployeeModel employeeModel = employeeService.updateCheckOut(id);
-            return ResponseEntity.ok(employeeModel);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+//    @PutMapping("/{id}/checkout")
+//    public ResponseEntity<EmployeeModel> updateCheckOut(@PathVariable Long id) {
+//        try {
+//            EmployeeModel employeeModel = employeeService.updateCheckOut(id);
+//            return ResponseEntity.ok(employeeModel);
+//        } catch (NoSuchElementException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 
     @PutMapping("/{id}/name") //name
     public ResponseEntity<EmployeeModel> updateName(@PathVariable Long id, @RequestParam String name){
