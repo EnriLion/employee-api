@@ -37,17 +37,10 @@ public class EmployeeService {
     public EmployeeModel registerCheckIn(String name, String department, String position, String email, String phone) {
         EmployeeModel employeeModel = new EmployeeModel();
         employeeModel.setName(name);
-//        employeeModel.setCheckInTime(LocalDateTime.now());
-//        employeeModel.setCheckOutTime(LocalDateTime.now());
         employeeModel.setDepartment(department);
         employeeModel.setPosition(position);
         employeeModel.setEmail(email);
         employeeModel.setPhone(phone);
-//        CheckInModel checkInModel = new CheckInModel();
-//        checkInModel.setCheckInTime(LocalDateTime.now());
-//        checkInModel.setCheckOutTime(LocalDateTime.now());
-//        checkInModel.setStatus(false);
-//        employeeModel.getCheckIns().add(checkInModel);
         return employeeRepository.save(employeeModel);
     }
 

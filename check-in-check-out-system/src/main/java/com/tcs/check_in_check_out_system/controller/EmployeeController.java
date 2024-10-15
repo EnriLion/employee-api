@@ -19,10 +19,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping("/checkin")
+    @PostMapping("")
     public ResponseEntity<EmployeeModel> loginCheckIn(@RequestParam String name , @RequestParam String department, @RequestParam String position, @RequestParam String email, @RequestParam String phone){
         if (name.isEmpty() || department.isEmpty() || position.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-           return  ResponseEntity.notFound().build();
+            return  ResponseEntity.notFound().build();
         } else {
             EmployeeModel employeeModel = employeeService.registerCheckIn(name,department,position,email,phone);
             return ResponseEntity.ok(employeeModel);
