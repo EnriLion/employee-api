@@ -28,9 +28,9 @@ public class EmployeeModel {
 
     private String phone;
 
-//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Set cascade to manage check-ins
-//    @JsonManagedReference
-//    private List<CheckInModel> checkIns = new ArrayList<>();
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
+    @JsonManagedReference
+    private List<CheckInModel> checkIns = new ArrayList<>();
 
 //    //Getter & Setters
 //

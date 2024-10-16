@@ -10,4 +10,6 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long> {
+    boolean existsByPhone(String phone);
+    boolean existsByEmail(String email);
 }

@@ -1,12 +1,15 @@
 package com.tcs.check_in_check_out_system.service;
 
 //import com.tcs.check_in_check_out_system.model.CheckInModel;
+import com.tcs.check_in_check_out_system.model.CheckInModel;
 import com.tcs.check_in_check_out_system.model.EmployeeModel;
 //import com.tcs.check_in_check_out_system.repository.CheckInRepository;
+import com.tcs.check_in_check_out_system.repository.CheckInRepository;
 import com.tcs.check_in_check_out_system.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.http.HttpHeaders;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,11 +23,8 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-//    @Autowired
-//    private CheckInRepository checkInRepository;
-
-//    @Autowired
-//    private CheckInRepository checkInRepository;
+    @Autowired
+    private CheckInRepository checkInRepository;
 
     //1) Allows users to register a check-in //Post
     //2) Retrieve check-in and check-out records. //Get
@@ -36,32 +36,41 @@ public class EmployeeService {
     //1
     public EmployeeModel registerCheckIn(String name, String department, String position, String email, String phone) {
         EmployeeModel employeeModel = new EmployeeModel();
+        CheckInModel checkInModel = new CheckInModel();
+
+        if(employeeRepository.existsByPhone(phone) || employeeRepository.existsByEmail(email)){
+            throw new IllegalArgumentException("One user has the same number or the same email");
+        }
+
         employeeModel.setName(name);
         employeeModel.setDepartment(department);
         employeeModel.setPosition(position);
         employeeModel.setEmail(email);
         employeeModel.setPhone(phone);
+        employeeRepository.save(employeeModel);
+
+        checkInModel.setCheckInTime(LocalDateTime.now());
+        checkInModel.setCheckOutTime(LocalDateTime.now());
+        checkInModel.setEmployee(employeeModel);
+        checkInModel.setPerson(employeeModel.getId());
+        employeeModel.getCheckIns().add(checkInModel);
+
+
         return employeeRepository.save(employeeModel);
     }
 
-    public EmployeeModel registCheckIn(Long id) {
-        // Fetch the existing employee
-        EmployeeModel employeeModel = employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    public EmployeeModel registerCheckIn(Long id) {
+        EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        employeeRepository.save(employeeModel);
 
-        // Create a new CheckInModel
-//        CheckInModel checkInModel = new CheckInModel();
-//        checkInModel.setCheckInTime(LocalDateTime.now()); // Or set to LocalDateTime.now()
-//        checkInModel.setCheckOutTime(null); // Set to null or manage based on your logic
-//        checkInModel.setStatus(false); // Set initial status
+        CheckInModel checkInModel = new CheckInModel();
+        checkInModel.setCheckInTime(LocalDateTime.now());
+        checkInModel.setCheckOutTime(LocalDateTime.now());
+        checkInModel.setEmployee(employeeModel);
+        checkInModel.setPerson(employeeModel.getId());
 
-        // Link back to the employee if needed
-//        checkInModel.setEmployee(employeeModel);
+        employeeModel.getCheckIns().add(checkInModel);
 
-        // Add the new check-in to the employee's existing check-ins
-//        employeeModel.getCheckIns().add(checkInModel);
-
-        // Save the updated employee model
         return employeeRepository.save(employeeModel);
     }
 
@@ -75,13 +84,6 @@ public class EmployeeService {
         return records;
     }
 
-    //3
-    public EmployeeModel updateCheckOut(Long id) {
-        EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
-//        employeeModel.setCheckOutTime(now());
-        EmployeeModel updatedPerson = employeeRepository.save(employeeModel);
-        return updatedPerson;
-    }
 
     //4
     public void deleteRecord(Long id){
@@ -104,12 +106,18 @@ public class EmployeeService {
 
     public EmployeeModel updateEmail(Long id, String  email) {
         EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        if(employeeRepository.existsByEmail(email)){
+            throw new IllegalArgumentException("One user has the same email");
+        }
         employeeModel.setEmail(email);
         return employeeRepository.save(employeeModel);
     }
 
     public EmployeeModel updatePhone(Long id, String  phone) {
         EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        if(employeeRepository.existsByPhone(phone)){
+            throw new IllegalArgumentException("One user has the same number");
+        }
         employeeModel.setPhone(phone);
         return employeeRepository.save(employeeModel);
     }
