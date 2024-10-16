@@ -3,6 +3,7 @@ package com.tcs.check_in_check_out_system.controller;
 import com.tcs.check_in_check_out_system.model.EmployeeModel;
 import com.tcs.check_in_check_out_system.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,18 @@ public class EmployeeController {
         }
     }
 
-//    @PostMapping("/checking/{id}")
-//    public ResponseEntity<EmployeeModel> registCheckIn(@PathVariable Long id){
-//        EmployeeModel updatedEmployee = employeeService.registCheckIn(id);
-//        return ResponseEntity.ok(updatedEmployee);
-//    }
+    @PutMapping("{id}/new")
+    public ResponseEntity<EmployeeModel> newRecord(@PathVariable Long id){
+        try{
+            EmployeeModel employeeModel = employeeService.registerCheckIn(id);
+            return ResponseEntity.ok(employeeModel);
+        } catch (NoSuchElementException e){
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 
     @GetMapping("/records")
     public ResponseEntity<List <EmployeeModel>> getRecords(){
@@ -46,17 +54,6 @@ public class EmployeeController {
         }
     }
 
-//    @PutMapping("/{id}/checkout")
-//    public ResponseEntity<EmployeeModel> updateCheckOut(@PathVariable Long id) {
-//        try {
-//            EmployeeModel employeeModel = employeeService.updateCheckOut(id);
-//            return ResponseEntity.ok(employeeModel);
-//        } catch (NoSuchElementException e) {
-//            return ResponseEntity.notFound().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
 
     @PutMapping("/{id}/name") //name
     public ResponseEntity<EmployeeModel> updateName(@PathVariable Long id, @RequestParam String name){
