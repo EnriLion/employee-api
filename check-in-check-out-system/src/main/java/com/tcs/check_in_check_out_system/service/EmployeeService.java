@@ -36,7 +36,7 @@ public class EmployeeService {
     //1
     public EmployeeModel registerCheckIn(String name, String department, String position, String email, String phone) {
         EmployeeModel employeeModel = new EmployeeModel();
-        CheckInModel checkInModel = new CheckInModel();
+//        CheckInModel checkInModel = new CheckInModel();
 
         if(employeeRepository.existsByPhone(phone) || employeeRepository.existsByEmail(email)){
             throw new IllegalArgumentException("One user has the same number or the same email");
@@ -48,12 +48,11 @@ public class EmployeeService {
         employeeModel.setEmail(email);
         employeeModel.setPhone(phone);
         employeeRepository.save(employeeModel);
-
-        checkInModel.setCheckInTime(LocalDateTime.now());
-        checkInModel.setCheckOutTime(LocalDateTime.now());
-        checkInModel.setEmployee(employeeModel);
-        checkInModel.setPerson(employeeModel.getId());
-        employeeModel.getCheckIns().add(checkInModel);
+//        checkInModel.setCheckInTime(LocalDateTime.now());
+//        checkInModel.setCheckOutTime(LocalDateTime.now());
+//        checkInModel.setEmployee(employeeModel);
+//        checkInModel.setPerson(employeeModel.getId());
+//        employeeModel.getCheckIns().add(checkInModel);
 
 
         return employeeRepository.save(employeeModel);
