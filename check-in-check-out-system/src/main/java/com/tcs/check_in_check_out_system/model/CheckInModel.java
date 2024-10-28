@@ -25,8 +25,8 @@ public class CheckInModel {
     @Column(name = "status")
     private Boolean status = false;
 
-    @Column(name = "person")
-    private Long person;
+//    @Column(name = "person")
+//    private Long person;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")

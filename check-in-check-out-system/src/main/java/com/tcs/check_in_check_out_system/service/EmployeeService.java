@@ -66,7 +66,7 @@ public class EmployeeService {
         checkInModel.setCheckInTime(LocalDateTime.now());
         checkInModel.setCheckOutTime(LocalDateTime.now());
         checkInModel.setEmployee(employeeModel);
-        checkInModel.setPerson(employeeModel.getId());
+//        checkInModel.setPerson(employeeModel.getId());
 
         employeeModel.getCheckIns().add(checkInModel);
 
