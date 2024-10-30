@@ -6,7 +6,9 @@ import com.tcs.check_in_check_out_system.model.EmployeeModel;
 //import com.tcs.check_in_check_out_system.repository.CheckInRepository;
 import com.tcs.check_in_check_out_system.repository.CheckInRepository;
 import com.tcs.check_in_check_out_system.repository.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpHeaders;
@@ -85,8 +87,14 @@ public class EmployeeService {
 
 
     //4
-    public void deleteRecord(Long id){
-        employeeRepository.deleteById(id);
+    public boolean deleteRecord (Long id){
+        EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        if(employeeModel != null){
+            employeeRepository.deleteById(id);
+            return true;
+        } else{
+            return false;
+        }
     }
 
     //5

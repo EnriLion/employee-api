@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 import java.time.LocalDateTime;
@@ -122,8 +123,14 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteRecord(@PathVariable Long id) {
-        employeeService.deleteRecord(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteRecord(@PathVariable Long id) {
+        try{
+            boolean isRemove = employeeService.deleteRecord(id);
+            return ResponseEntity.noContent().build();
+        } catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
