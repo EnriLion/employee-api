@@ -26,7 +26,7 @@ public class EmployeeController {
         if (name.isEmpty() || department.isEmpty() || position.isEmpty() || email.isEmpty() || phone.isEmpty()) {
             return  ResponseEntity.notFound().build();
         } else {
-            EmployeeModel employeeModel = employeeService.registerCheckIn(name,department,position,email,phone);
+            EmployeeModel employeeModel = employeeService.registerUser(name,department,position,email,phone);
             return ResponseEntity.ok(employeeModel);
         }
     }

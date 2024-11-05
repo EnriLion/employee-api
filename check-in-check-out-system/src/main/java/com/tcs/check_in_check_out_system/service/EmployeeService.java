@@ -36,7 +36,7 @@ public class EmployeeService {
     //6) Get records by id
 
     //1
-    public EmployeeModel registerCheckIn(String name, String department, String position, String email, String phone) {
+    public EmployeeModel registerUser(String name, String department, String position, String email, String phone) {
         EmployeeModel employeeModel = new EmployeeModel();
 //        CheckInModel checkInModel = new CheckInModel();
 
@@ -136,7 +136,7 @@ public class EmployeeService {
     }
 
     //6
-    public List<EmployeeModel> getRecordId(Long id){
+     public List<EmployeeModel> getRecordId(Long id){
         EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
         List<EmployeeModel> records = new LinkedList<>();
         records.add(employeeModel);
