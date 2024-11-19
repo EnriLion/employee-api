@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,6 +34,10 @@ public class CheckInModel {
     @JoinColumn(name = "employee_id")
     @JsonBackReference
     private EmployeeModel employee;
+
+    @OneToMany(mappedBy = "check", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) //Cascade to manage check-ins/ fetch =
+    @JsonBackReference("check-location")
+    private List<LocationModel> locationModels = new ArrayList<>();
 
 //    public EmployeeModel getEmployee(){
 //        return  employee;
