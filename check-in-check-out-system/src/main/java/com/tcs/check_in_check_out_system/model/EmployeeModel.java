@@ -1,5 +1,6 @@
 package com.tcs.check_in_check_out_system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,9 +29,13 @@ public class EmployeeModel {
 
     private String phone;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) //Cascade to manage check-ins/ fetch =
     @JsonManagedReference
     private List<CheckInModel> checkIns = new ArrayList<>();
+
+    @OneToMany(mappedBy = "employeeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) //Cascade to manage check-ins/ fetch =
+    @JsonBackReference("employee-location")
+    private List<LocationModel> locationModels = new ArrayList<>();
 
 //    //Getter & Setters
 //
